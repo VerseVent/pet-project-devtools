@@ -1,7 +1,9 @@
 // eslint-disable-next-line no-undef
 module.exports = {
   ci: {
-    collect: {},
+    collect: {
+      staticDistDir: './dist'
+    },
     upload: {
       target: 'temporary-public-storage'
     }
