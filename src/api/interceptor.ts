@@ -2,7 +2,7 @@ export function apiReqInterceptor() {
   const {fetch: originalFetch} = window
 
   window.fetch = async (...args) => {
-    let [resource, config] = args
+    let [resource] = args
 
     // request interceptor here
     console.log(import.meta.env)
@@ -11,7 +11,7 @@ export function apiReqInterceptor() {
       import.meta.env.VITE_API_KEY
     }`
 
-    const response = await originalFetch(resource, config)
+    const response = await originalFetch(resource, args[1])
 
     // response interceptor here
 
