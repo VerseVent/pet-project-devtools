@@ -1,4 +1,16 @@
 <script setup lang="ts">
+import {useCounterStore} from '@/stores/counter'
+import {onBeforeMount} from 'vue'
+
+function initData() {
+  const counterStore = useCounterStore()
+  counterStore.getPlaylistItems()
+}
+
+onBeforeMount(() => {
+  initData()
+})
+
 defineProps<{
   msg: string
 }>()
