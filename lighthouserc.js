@@ -1,10 +1,7 @@
 // eslint-disable-next-line no-undef
 module.exports = {
   ci: {
-    collect: {
-      startServerCommand: 'npm run dev',
-      url: ['http://localhost:5173']
-    },
+    collect: {},
     upload: {
       target: 'temporary-public-storage'
     }
