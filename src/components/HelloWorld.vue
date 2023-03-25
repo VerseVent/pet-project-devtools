@@ -1,4 +1,20 @@
 <script setup lang="ts">
+import {useCounterStore} from '@/stores/counter'
+import {onBeforeMount, ref} from 'vue'
+
+const responseData = ref<Object>({})
+
+async function initData() {
+  const counterStore = useCounterStore()
+  const items = await counterStore.getPlaylistItems()
+
+  responseData.value = items
+}
+
+onBeforeMount(() => {
+  initData()
+})
+
 defineProps<{
   msg: string
 }>()
@@ -12,6 +28,7 @@ defineProps<{
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
       <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>. What's next?
     </h3>
+    <h4>{{ responseData }}</h4>
   </div>
 </template>
 
