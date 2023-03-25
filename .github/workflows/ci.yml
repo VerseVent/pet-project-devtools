@@ -1,7 +1,5 @@
 name: CI
-push:
-  branches:
-    - develop
+on: [push]
 jobs:
   lighthouseci:
     runs-on: ubuntu-latest
