@@ -6,6 +6,7 @@ export const useCounterStore = defineStore('counter', {
       const response = await fetch(
         'playlists?part=snippet%2CcontentDetails&channelId=UC_x5XG1OV2P6uZZ5FSM9Ttw&maxResults=25'
       )
+      console.log(response)
       return response
     }
   }
