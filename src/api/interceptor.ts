@@ -10,6 +10,6 @@ export function apiReqInterceptor() {
 
     const response = await originalFetch(resource, args[1])
 
-    return response.json()
+    return response
   }
 }

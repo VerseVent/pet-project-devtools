@@ -7,11 +7,20 @@ const actualPlaylist = computed(() => {
   return playlist.value === '' ? 'empty' : playlist.value
 })
 
+const playlistItems = ref<Array<object>>([])
+
 async function findPlaylist() {
   const {usePlaylistStore} = await import('../stores/playlist')
   const store = usePlaylistStore()
 
-  store.getPlaylistItems(playlist.value)
+  const {items} = await store.getPlaylistItems(playlist.value)
+  playlistItems.value = items
+
+  console.log(playlistItems.value[0].contentDetails.videoId) //TODO:place inside player
+
+  const video = await store.getVideo(playlistItems.value[0].contentDetails.videoId)
+
+  console.log(video)
 }
 </script>
 

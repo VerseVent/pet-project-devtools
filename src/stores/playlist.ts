@@ -1,5 +1,5 @@
 import {request} from '@/api/fetch-wrapper'
-import type {IPlaylistResponse} from '@/dts/IPlaylistResponse'
+import type {IPlaylistResponse} from '@/dto/IPlaylistResponse'
 import {defineStore} from 'pinia'
 
 export const usePlaylistStore = defineStore('playlist', {
@@ -18,6 +18,9 @@ export const usePlaylistStore = defineStore('playlist', {
         `playlistItems?part=snippet%2CcontentDetails&maxResults=75&pageToken=${response.nextPageToken}&playlistId=${playlist}`
       )
       return response
+    },
+    async getVideo(id: string) {
+      return request<any>(`videos?part=snippet%2CcontentDetails%2Cstatistics&id=${id}`)
     }
   }
 })
