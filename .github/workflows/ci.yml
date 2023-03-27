@@ -6,19 +6,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v2.5.1
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
 
       - name: npm install
         run: npm install && npm install -g @lhci/cli@0.11.x
 
       - name: npm build
         run: npm run build
-
-      - name: check Lighthouse health
-        run: lhci healthcheck --fatal
 
       - name: run Lighthouse CI
         run: lhci autorun
