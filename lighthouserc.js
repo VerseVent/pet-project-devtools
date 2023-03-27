@@ -3,11 +3,8 @@ module.exports = {
   ci: {
     collect: {
       url: ['http://localhost:5173'],
-      startServerCommand: 'npm run dev'
+      staticDistDir: './dist'
     },
-    // collect: {
-    //   staticDistDir: './dist'
-    // },
     assert: {
       preset: 'lighthouse:recommended',
       assertions: {
