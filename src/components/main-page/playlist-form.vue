@@ -14,20 +14,15 @@ defineProps({
   }
 })
 
-function emitFormInput(playlist: string): void {
-  emits('update:playlist', playlist)
+const emitFormInput = (playlist: Event) => {
+  emits('update:playlist', (playlist.target as HTMLInputElement).value)
 }
 </script>
 
 <template>
   <h2>Provide youtube playlist link</h2>
   <form class="form">
-    <input
-      class="form__input"
-      type="text"
-      :value="playlist"
-      @input="emitFormInput($event.target.value)"
-    />
+    <input class="form__input" type="text" :value="playlist" @input="emitFormInput" />
   </form>
 </template>
 

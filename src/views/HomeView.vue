@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type {IPlaylistItem} from '@/dto/IPlaylistItem'
 import {computed, ref} from 'vue'
 import PlaylistForm from '../components/main-page/playlist-form.vue'
 const playlist = ref<string>('')
@@ -7,7 +8,7 @@ const actualPlaylist = computed(() => {
   return playlist.value === '' ? 'empty' : playlist.value
 })
 
-const playlistItems = ref<Array<object>>([])
+const playlistItems = ref<Array<IPlaylistItem>>([])
 
 async function findPlaylist() {
   const {usePlaylistStore} = await import('../stores/playlist')
