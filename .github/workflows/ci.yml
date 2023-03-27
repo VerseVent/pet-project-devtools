@@ -15,5 +15,8 @@ jobs:
       - name: npm build
         run: npm run build
 
+      - name: check Lighthouse health
+        run: lhci healthcheck --fatal
+
       - name: run Lighthouse CI
         run: lhci autorun
