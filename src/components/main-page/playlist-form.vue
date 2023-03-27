@@ -34,7 +34,5 @@ const emitFormInput = (playlist: Event) => {
      to-pink-500 focus:bg-pos-100 transition-all bg-size-200 duration-500 appearance-none
       py-2 px-4 w-[350px] outline-none rounded-md text-white text-lg;
   }
-  &__btn {
-  }
 }
 </style>
