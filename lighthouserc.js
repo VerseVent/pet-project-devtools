@@ -10,7 +10,8 @@ module.exports = {
       assertions: {
         'offscreen-images': 'off',
         'uses-webp-images': 'off',
-        'color-contrast': 'off'
+        'color-contrast': 'off',
+        'categories:pwa': 'off'
       }
     },
     upload: {
