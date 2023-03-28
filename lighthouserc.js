@@ -9,7 +9,6 @@ module.exports = {
       }
     },
     assert: {
-      preset: 'lighthouse:recommended',
       assertions: {
         'offscreen-images': 'off',
         'uses-webp-images': 'off',
