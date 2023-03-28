@@ -27,15 +27,14 @@ async function findPlaylist() {
 
 <template>
   <div class="form__container">
-    <PlaylistForm v-model:playlist="playlist" />
+    <PlaylistForm v-model:playlist="playlist" @emit-submit="findPlaylist" />
     <h3>Actual playlist: {{ actualPlaylist }}</h3>
-    <button @click="findPlaylist">Find playlist</button>
   </div>
 </template>
 <style scoped lang="scss">
 .form {
   &__container {
-    @apply mb-72 mr-24;
+    @apply mb-72 mr-24 w-[100%];
   }
 }
 </style>
