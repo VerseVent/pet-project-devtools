@@ -1,11 +1,13 @@
 <script setup lang="ts">
-interface IEmit {
+import {computed} from 'vue'
+
+interface IEmits {
   (e: 'update:playlist', playlist: string): void
   (e: 'emitSubmit'): void
 }
 
-const emits = defineEmits<IEmit>()
-defineProps({
+const emit = defineEmits<IEmits>()
+const props = defineProps({
   playlist: {
     type: String,
     required: false,
@@ -16,9 +18,10 @@ defineProps({
 })
 
 const emitFormInput = (playlist: Event) => {
-  emits('update:playlist', (playlist.target as HTMLInputElement).value)
+  emit('update:playlist', (playlist.target as HTMLInputElement).value)
 }
-const emitFindPlaylist = () => emits('emitSubmit')
+const isDisabled = computed(() => props.playlist === '')
+const emitFindPlaylist = () => emit('emitSubmit')
 </script>
 
 <template>
@@ -34,7 +37,9 @@ const emitFindPlaylist = () => emits('emitSubmit')
     />
   </form>
   <div class="form__btn-container">
-    <button class="form__btn" @click="emitFindPlaylist">Find playlist</button>
+    <button class="form__btn" :disabled="isDisabled" @click="emitFindPlaylist">
+      Find playlist
+    </button>
   </div>
 </template>
 
@@ -53,7 +58,7 @@ const emitFindPlaylist = () => emits('emitSubmit')
     @apply pb-2;
   }
   &__btn {
-    @apply bg-gradient-to-r border-0 from-purple-500 to-pink-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed;
+    @apply bg-gradient-to-r border-0 from-purple-500 to-pink-500 text-white font-bold py-2 px-4 rounded cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
   }
   &__btn-container {
     @apply flex justify-end;
