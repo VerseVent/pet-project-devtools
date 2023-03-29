@@ -10,12 +10,9 @@ export const usePlaylistStore = defineStore('playlist', {
       )
       return response
     },
-    async getPlaylistItems(playlist: string) {
+    async getPlaylistItems(playlist: string, nextPageToken: string) {
       const response = await request<IPlaylistResponse>(
-        `playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=${playlist}`
-      )
-      await request<IPlaylistResponse>(
-        `playlistItems?part=snippet%2CcontentDetails&maxResults=75&pageToken=${response.nextPageToken}&playlistId=${playlist}`
+        `playlistItems?part=snippet%2CcontentDetails&maxResults=50&pageToken=${nextPageToken}&playlistId=${playlist}`
       )
       return response
     },
