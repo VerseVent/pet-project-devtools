@@ -1,7 +1,10 @@
 <script setup lang="ts">
+// @ts-nocheck
+
 import {onMounted, ref, watch} from 'vue'
 import YTPlayer from 'youtube-player'
 import type {YouTubePlayer} from 'youtube-player/dist/types'
+import type {IPlayerState} from '../../dto/IPlayerState'
 import prevIcon from '@/assets/prev-button.svg'
 import nextIcon from '@/assets/next-button.svg'
 import playIcon from '@/assets/play-button.svg'
@@ -12,7 +15,15 @@ interface IEmits {
   (emitName: 'prevVideo'): void
 }
 
-const isPlaying = ref(false)
+const stateNames: IPlayerState = {
+  '-1': 'unstarted',
+  0: 'ended',
+  1: 'playing',
+  2: 'paused',
+  3: 'buffering',
+  5: 'video cued'
+}
+
 const emit = defineEmits<IEmits>()
 const props = defineProps({
   videoId: {
@@ -23,17 +34,26 @@ const props = defineProps({
     }
   }
 })
+const isPlaying = ref(false)
 const playerEl = ref()
 
 let player: YouTubePlayer
 
-onMounted(() => {
-  createPlayer()
+onMounted(async () => {
+  const player = await createPlayer()
+  player.on('stateChange', function (event) {
+    if (!stateNames[event.data]) {
+      throw new Error('Unknown state (' + event.data + ').')
+    }
+
+    console.log('State: ' + stateNames[event.data] + ' (' + event.data + ').')
+  })
 })
 
 async function createPlayer() {
   player = YTPlayer(playerEl.value.id, {height: '0', width: '0'})
   await player.loadVideoById(props.videoId)
+  return player
 }
 
 watch(

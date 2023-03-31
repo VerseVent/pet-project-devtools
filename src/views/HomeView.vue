@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import YtPlayer from '@/components/music-player/yt-player.vue'
 import loaderStepperVue from '@/components/ui/loader-stepper.vue'
+
+import {addPlaylist} from '@/db/transactions/add-playlist'
+import {readPlaylist} from '@/db/transactions/read-playlist'
 import type {IPlaylistItem} from '@/dto/IPlaylistItem'
 import {ref} from 'vue'
 import PlaylistForm from '../components/main-page/playlist-form.vue'
 import {usePlaylistStore} from '../stores/playlist'
-const playlist = ref<string>('')
+
+const playlistId = ref<string>('')
 const actualPlaylist = ref<string>('')
 
 const isPlaylistGenerated = ref<boolean>(false)
@@ -18,9 +22,34 @@ const playlistItems = ref<Array<IPlaylistItem>>([])
 
 const store = usePlaylistStore()
 
+onCreated()
+
+function onCreated() {
+  isPlaylistExisting()
+}
+
+const isPlaylistInputInactive = ref(true)
+async function isPlaylistExisting() {
+  let playlistFromDB = await readPlaylist()
+  console.log(playlistFromDB)
+  if (playlistFromDB.length) {
+    isPlaylistInputInactive.value = true
+
+    actualPlaylist.value = playlistFromDB[0].id
+    playlistId.value = playlistFromDB[0].id
+    generatePlaylist()
+    return
+  }
+  isPlaylistInputInactive.value = false
+}
+
 async function generatePlaylist(pageToken: string = '') {
   isLoading.value = true
-  const {items, nextPageToken} = await store.getPlaylistItems(playlist.value, pageToken)
+  const {
+    items,
+    nextPageToken,
+    pageInfo: {totalResults}
+  } = await store.getPlaylistItems(playlistId.value, pageToken)
 
   sumPlaylistItems(items)
 
@@ -28,10 +57,11 @@ async function generatePlaylist(pageToken: string = '') {
     generatePlaylist(nextPageToken)
     return
   }
-  console.log(playlistItems.value)
   isPlaylistGenerated.value = true
+  addPlaylist(playlistItems.value[0].snippet.playlistId, totalResults)
   setActiveVideo()
   isLoading.value = false
+
   // TODO: Some enhancement with video info, preview or smth else
   // const video = await store.getVideo(playlistItems.value[0].contentDetails.videoId)
 
@@ -69,7 +99,11 @@ const setActiveVideo = () => {
 
 <template>
   <div class="form__container">
-    <PlaylistForm v-model:playlist="playlist" @emit-submit="generatePlaylist" />
+    <PlaylistForm
+      v-if="!isPlaylistInputInactive"
+      v-model:playlist="playlistId"
+      @emit-submit="generatePlaylist"
+    />
     <h3>Actual playlist: {{ actualPlaylist }}</h3>
 
     <YtPlayer
