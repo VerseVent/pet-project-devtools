@@ -3,9 +3,11 @@ export interface IPlaylistItem {
   etag: string
   id: string
   kind: string
-  snippet: Object
+  snippet: IItemSnippet
 }
-
+interface IItemSnippet {
+  playlistId: string
+}
 interface IContent {
   videoId: string
   videoPublishedAt: string
