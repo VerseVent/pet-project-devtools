@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// @ts-nocheck
+
 import {onMounted, ref, watch} from 'vue'
 import YTPlayer from 'youtube-player'
 import type {YouTubePlayer} from 'youtube-player/dist/types'
