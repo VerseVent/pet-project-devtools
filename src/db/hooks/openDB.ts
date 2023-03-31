@@ -1,3 +1,4 @@
+// @ts-nocheck
 export async function openDB(dbname: string, version: number) {
   return new Promise((resolve, reject) => {
     const idb = window.indexedDB

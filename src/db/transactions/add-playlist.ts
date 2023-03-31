@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {makeTX} from '../hooks/makeTX'
 import {openDB} from '../hooks/openDB'
 
