@@ -23,7 +23,7 @@ onMounted(() => {
     .forEach(() => {
       stars.push(addStar())
     })
-  const spaceTexture = new THREE.TextureLoader().load('./assets/twis-hero.jpeg')
+  const spaceTexture = new THREE.TextureLoader().load('./dist/assets/twis-hero.jpeg')
 
   scene.background = spaceTexture
 
